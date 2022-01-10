@@ -1,0 +1,38 @@
+﻿<!DOCTYPE html>
+
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="utf-8" />
+    <title>Geolocation API</title>
+    <script>
+        function getLocation() {
+            if (navigator.geolocation) {
+                navigator.geolocation.getCurrentPosition(show, dispError);
+            }
+            else {
+                document.getElementById("msgBox").innerHTML = "The browser does not support Geolocation API.";
+            }
+        }
+
+        function show(pos) {
+            document.getElementById("msgBox").innerHTML = "Latitude: " + pos.coords.latitude + "<br>Longitude: " + pos.coords.longitude + "<br>Accuracy: " + pos.coords.accuracy;
+        }
+
+        function dispError(error) {
+            if (error.PERMISSION_DENIED)
+                document.getElementById("msgBox").innerHTML = "Permission denied!! Please press Allow.";
+            else if (error.POSITION_UNAVAILABLE)
+                document.getElementById("msgBox").innerHTML = "Location Unavailable!! Please try again.";
+            else if (error.TIMEOUT)
+                document.getElementById("msgBox").innerHTML = "Request timed out!! Please try again.";
+            else if (error.UNKNOWN_ERROR)
+                document.getElementById("msgBox").innerHTML = "Some unknown error occured!! Please try again.";
+        }
+    </script>
+</head>
+<body>
+    <p>Click the button to get the location</p>
+    <button onclick="getLocation()">Get Location</button>
+    <p id="msgBox"></p>
+</body>
+</html>
