@@ -1,0 +1,44 @@
+﻿<!DOCTYPE html>
+
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="utf-8" />
+    <title>Local storage</title>
+    <script>
+        function saveToLocal() {
+            if (localStorage.name) {
+                var names = JSON.parse(localStorage.name);
+                console.log(type(names));
+                //names.add(document.getElementById("name").value);
+            }
+            //localStorage.setItem("name", document.getElementById("name").value);
+        }
+
+        function saveToSession() {
+            sessionStorage.setItem("name", JSON.stringify(document.getElementById("name").value));
+        }
+        function display() {
+            if (localStorage.name) {
+                document.getElementById("dispLocal").innerHTML = "<br>" + localStorage.getItem("name");
+            }
+            else {
+                document.getElementById("dispLocal").innerHTML = "Local storage is empty!!";
+            }
+            if (sessionStorage.name) {
+                document.getElementById("dispSession").innerHTML = "<br>" + localStorage.getItem("name");
+            }
+            else {
+                document.getElementById("dispSession").innerHTML = "Session storage is empty!!";
+            }
+        }
+    </script>
+</head>
+<body>
+    <input type="text" name="name" id="name"/>
+    <button onclick="saveToLocal()">Save to local storage</button>
+    <button onclick="saveToSession()">Save to session storage</button>
+    <button onclick="display()">Display</button>
+    <p id="dispLocal"></p>
+    <p id="dispSession"></p>
+</body>
+</html>
