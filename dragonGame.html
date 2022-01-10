@@ -1,0 +1,129 @@
+﻿<!DOCTYPE html>
+
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="utf-8" />
+    <title>Drag/Drop Game</title>
+    <style>
+        #contents {
+            overflow: auto;
+            margin: auto;
+            margin-bottom: 10px;
+            width: 100%;
+            display: flex;
+        }
+
+        #leftWall {
+            width: 30%;
+            margin: 5px;
+            padding: 5px;
+            margin-top: 20px;
+        }
+
+        #rightWall {
+            width: 30%;
+            padding: 5px;
+            margin-top: 20px;
+        }
+
+        #mainContents {
+            width: 40%;
+            margin: 0px;
+            padding-top: 20px;
+        }
+
+        #dragon {
+            width: 100px;
+            height: 100px;
+        }
+
+        .center-div {
+            margin: 0 auto;
+            padding: 15px;
+        }
+
+        img {
+            width: 350px;
+            height: 600px;
+        }
+
+        #food {
+            width: 100px;
+            height: 100px;
+            margin-top: 350px;
+        }
+
+        #foodDiv {
+            width: 100px;
+            height: 100px;
+        }
+
+        .printDown {
+            margin-top: 380px;
+        }
+
+        h1 {
+            font-family: 'Comic Sans MS';
+            color: green;
+        }
+    </style>
+    <script>
+        function drag(ev) {
+            ev.dataTransfer.setData("text", ev.target.id);
+        }
+
+        function allowDrop(ev) {
+            ev.preventDefault();
+            console.log(ev.defaultPrevented);
+        }
+
+        function drop(ev) {
+            ev.preventDefault();
+            var data = ev.dataTransfer.getData("text");
+            console.log(data);
+            console.log(ev.target);
+            document.getElementById(data).className = "printDown";
+            ev.target.parentNode.replaceChild(document.getElementById(data), ev.target);
+            document.getElementById("message").innerHTML = "<h1>Great Work!!!<h1>";
+            window.setTimeout(function () {
+                location.reload()
+            }, 2000)
+        }
+
+        function dropFail(ev) {
+            ev.preventDefault();
+            var data = ev.dataTransfer.getData("text");
+            //ev.target.appendChild(document.getElementById(data));
+            document.getElementById("message").innerHTML = "<h1>Oops!!!!<h1>";
+            window.setTimeout(function () {
+                location.reload()
+            }, 2000)
+            //const timeout = setTimeout(location.reload(), 2000);
+            //clearTimeout(timeout);
+        }
+    </script> 
+</head>
+<body>
+    <div id="contents">
+        <div id="leftWall"  ondragenter="dropFail(event)">
+            <img src="C:\Users\User8\Downloads\wall.jfif" alt="wall" />
+        </div>
+
+        <div id="mainContents">
+            <div class="center-div">
+                <img src="C:\Users\User8\Downloads\dragon.png" id="dragon" alt="dragon" draggable="true" ondragstart="drag(event)"/>
+            </div>
+            <div class="center-div">
+                <span id="message"></span>
+            </div>
+            <div class="center-div" id="foodDiv">
+                <img src="C:\Users\User8\Downloads\food.png" id="food" alt="food" ondragover="allowDrop(event)" ondrop="drop(event)"/>
+            </div>
+        </div>
+
+        <div id="rightWall" ondragenter="dropFail(event)">
+            <img src="C:\Users\User8\Downloads\wall.jfif" alt="wall" />
+        </div>
+    </div>
+</body>
+</html>
